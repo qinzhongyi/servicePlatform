@@ -1,0 +1,82 @@
+/*==============================================================*/
+/* User: sinosoft_service                                       */
+/*==============================================================*/
+#create user sinosoft_service;
+/*==============================================================*/
+/* Table: SinosoftEnvironmental                                 */
+/*==============================================================*/
+create table SinosoftEnvironmental
+(
+   EId                  varchar(32) not null comment '环境编码',
+   EName                varchar(50) not null comment '环境名称',
+   CreateDate           datetime not null DEFAULT CURRENT_TIMESTAMP comment '配置时间',
+   CUserCode            varchar(32) not null comment '配置人编码',
+   CUserName            varchar(50) not null comment '配置人名称',
+   Valied               varchar(2) not null comment '是否有效 1有效 0无效',
+   UpdateDate           datetime comment '更新时间',
+   ERemark              varchar(200) comment '环境说明',
+   primary key (EId)
+);
+alter table SinosoftEnvironmental comment '环境配置表';
+/*==============================================================*/
+/* Table: SinosoftProject                                       */
+/*==============================================================*/
+create table SinosoftProject
+(
+   PId                  varchar(32) not null comment '项目编码',
+   PName                varchar(50) not null comment '项目名称',
+   CreateDate           datetime not null DEFAULT CURRENT_TIMESTAMP comment '创建时间',
+   CUserCode            varchar(32) not null comment '创建用户编码',
+   CUserName            varchar(50) not null comment '创建用户名称',
+   UpdateDate           datetime comment '更新时间',
+   Valied               varchar(2) not null comment '是否有效',
+   PRemark              varchar(200) comment '项目说明',
+   PAddr                varchar(200) not null comment '项目地址',
+   EId                  varchar(32) not null comment '环境编码',
+   primary key (PId)
+);
+alter table SinosoftProject comment '项目配置表';
+/*==============================================================*/
+/* Table: SinosoftUserInfo                                      */
+/*==============================================================*/
+create table SinosoftUserInfo
+(
+   UserID               varchar(32) not null comment '用户唯一标识',
+   Mobile               varchar(11) comment '手机号',
+   EMail                varchar(100) comment '邮箱',
+   WeChar               varchar(50) comment '微信号',
+   HeadAddr             varchar(200) comment '头像地址',
+   Remark               varchar(200) comment '备注',
+   CreateDate           datetime null DEFAULT CURRENT_TIMESTAMP comment '创建时间',
+   UpdateDate           datetime comment '修改时间',
+   primary key (UserID)
+);
+alter table SinosoftUserInfo comment '用户信息表';
+/*==============================================================*/
+/* Table: Sinosoft_User                                         */
+/*==============================================================*/
+create table Sinosoft_User
+(
+   UserCode             varchar(32) not null comment '用户帐号',
+   UserName             varchar(50) not null comment '用户名称',
+   CreateDate           datetime not null DEFAULT CURRENT_TIMESTAMP comment '创建时间',
+   UserId               varchar(32) not null comment '用户唯一标识',
+   UpdateDate           datetime comment '更新时间',
+   UserPwd              varchar(50) not null comment '用户密码',
+   primary key (UserId)
+);
+alter table Sinosoft_User comment '用户表';
+
+create table SinosoftSharedBuffer (
+   USERCODE				 varchar(32) NOT NULL COMMENT '登陆帐号',
+   token				 varchar(50) NOT NULL COMMENT 'token',
+   LOGINDATE			 datetime DEFAULT NULL DEFAULT CURRENT_TIMESTAMP comment '登陆时间',
+   UPDATEDATE			 datetime DEFAULT NULL COMMENT '最新操作时间',
+   VALIDATED			 varchar(1) NOT NULL COMMENT '有效标志',
+   IP					 varchar(32) DEFAULT NULL COMMENT '登陆IP',
+  PRIMARY KEY (token)
+);
+alter table SinosoftSharedBuffer COMMENT='用来管理用户登录信息的缓存共享表';
+
+INSERT INTO sinosoft_user 
+VALUES('admin', 'admin', 'sinosoft_admin', 'admin');
